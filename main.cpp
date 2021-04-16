@@ -87,20 +87,6 @@ int main()
 		textureMan.loadFromFile("texture\\robert.png");
 		Sprite spriteMan(textureMan);
 		if (ke) {
-			for (int i = 255 * 4; i >= 0; i--) {
-				if (i % 4 != 0) {
-					if (!poz)
-						spriteMan.setPosition(400, 0);
-
-					spriteMan.setColor(Color(255, 255, 255, int(i / 4)));
-
-					window.draw(sprite);
-					window.draw(spriteMan);
-					RenderDialog();
-
-					window.display();
-				}
-			}
 			for (int i = 0; i < 255*4; i++) {
 				if (i % 4 != 0) {
 					if (poz) 
