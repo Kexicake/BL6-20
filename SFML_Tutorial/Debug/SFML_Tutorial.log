@@ -1,2 +1,6 @@
 ﻿  main.cpp
+C:\dev\SFML_Tutorial\main.cpp(199,19): warning C4244: аргумент: преобразование "wchar_t" в "char", возможна потеря данных
+C:\dev\SFML_Tutorial\main.cpp(206,19): warning C4244: аргумент: преобразование "wchar_t" в "char", возможна потеря данных
+C:\dev\SFML_Tutorial\main.cpp(213,19): warning C4244: аргумент: преобразование "wchar_t" в "char", возможна потеря данных
+C:\dev\SFML_Tutorial\main.cpp(220,19): warning C4244: аргумент: преобразование "wchar_t" в "char", возможна потеря данных
   SFML_Tutorial.vcxproj -> C:\dev\SFML_Tutorial\Debug\SFML_Tutorial.exe
