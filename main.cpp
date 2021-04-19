@@ -20,7 +20,7 @@ RenderWindow window(VideoMode(w, h), "BL6-20");
 double x = 0, y = 0;
 bool tap = true;
 bool poz = false;
-String text;
+String text, temp;
 wifstream stroka(L"C:\\dev\\SFML_Tutorial\\Debug\\text\\rid.txt");
 
 wchar_t help(char un) {
@@ -190,37 +190,27 @@ wchar_t help(char un) {
 void next() {
 	setlocale(LC_ALL, "Russian");
 	wchar_t buff[80];
-
 	String a = L"";
+	bool check = false;
+	text = L"";
+	for (int b = 0; b < 4; b++)
+	{
+		if (check) {
+			break;
+		}
+		a = L"";
+		stroka.read(buff, 80);
+		for (int i = 0; i < 80; i++) {
+			if (buff[i] == '\n') {
+				check = true;
+				break;
+			}
+			a += help(buff[i]);
+			
+		}
+		text += a + L'\n';
+	}
 
-	stroka.read(buff,80);
-	//cout << buff;
-	for (int i = 0; i < 80	; i++) {	
-		a += help(buff[i]);
-	}
-	text = a + L'\n';
-	a = "";
-	stroka.read(buff, 80);
-	//cout << buff;
-	for (int i = 0; i < 80; i++) {
-		a += help(buff[i]);
-	}
-	text += a + L'\n';
-	a = "";
-	stroka.read(buff, 80);
-	//cout << buff;
-	for (int i = 0; i < 80; i++) {
-		a += help(buff[i]);
-	}
-	text += a + L'\n';
-	a = "";
-	stroka.read(buff, 80);
-	//cout << buff;
-	for (int i = 0; i < 80; i++) {
-		a += help(buff[i]);
-	}
-	text += a + L'\n';
-	string b = a;
 }
 
 void RenderText(String texts) {
