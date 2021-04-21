@@ -12,6 +12,7 @@
 #define w 1300
 #define h 900
 #define speed 0.125
+#define exe "C:\\dev\\SFML_Tutorial\\Debug\\"
 
 using namespace sf;
 using namespace std;
@@ -21,7 +22,7 @@ double x = 0, y = 0;
 bool tap = true;
 bool poz = false;
 String text, temp;
-ifstream stroka("C:\\dev\\SFML_Tutorial\\Debug\\text\\rd.txt");
+ifstream stroka("text\\rd.txt");
 
 wchar_t help(char un) {
 	switch (un)
@@ -223,7 +224,7 @@ void RenderText(String texts) {
 
 	//«¿√–”« ¿ ÿ–»‘“¿
 	Font font;
-	font.loadFromFile("C:\\dev\\SFML_Tutorial\\Debug\\fonts\\Montserrat-SemiBoldItalic.ttf");
+	font.loadFromFile("fonts\\Montserrat-SemiBoldItalic.ttf");
 
 	//“≈ —“
 	Text text;
@@ -249,8 +250,11 @@ void RenderDialog() {
 	window.draw(rectangle1);
 }
 
-void RenderMan(){
-
+Sprite RenderMan(string skin, string face, string clothes){
+	Texture skin_t;
+	skin_t.loadFromFile(skin);
+	Sprite skin_s(skin_t);
+	return skin_s;
 }
 
 void RenderGameWindow(Sprite back, Sprite man) {
@@ -291,7 +295,7 @@ int main()
 		}
 
 		//‘ŒÕ
-		String img = "C:\\dev\\SFML_Tutorial\\Debug\\texture\\bg1.png";
+		String img = "texture\\bg1.png";
 		Texture texture;
 		texture.loadFromFile(img);
 		Sprite sprite(texture);
@@ -299,7 +303,7 @@ int main()
 
 		//–Œ¡≈–“ —œ–¿…“
 		Texture textureMan;
-		textureMan.loadFromFile("C:\\dev\\SFML_Tutorial\\Debug\\texture\\robert.png");
+		textureMan.loadFromFile("texture\\robert.png");
 		Sprite spriteMan(textureMan);
 
 		if (tap) {
