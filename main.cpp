@@ -21,7 +21,7 @@ double x = 0, y = 0;
 bool tap = true;
 bool poz = false;
 String text, temp;
-wifstream stroka(L"C:\\dev\\SFML_Tutorial\\Debug\\text\\rid.txt");
+ifstream stroka("C:\\dev\\SFML_Tutorial\\Debug\\text\\rd.txt");
 
 wchar_t help(char un) {
 	switch (un)
@@ -68,7 +68,7 @@ wchar_t help(char un) {
 		return L'ó';
 	case 'a':
 		return L'ô';
-	case '[':
+	case '*':
 		return L'õ';
 	case 'w':
 		return L'ö';
@@ -78,7 +78,7 @@ wchar_t help(char un) {
 		return L'ù';
 	case 'i':
 		return L'ø';
-	case ']':
+	case '_':
 		return L'ú';
 	case 's':
 		return L'û';
@@ -182,6 +182,12 @@ wchar_t help(char un) {
 		return L'9';
 	case '0':
 		return L'0';
+	case '\n':
+		return L'\n';
+	case '?':
+		return L'?';
+	case ':':
+		return L':';
 	default:
 		return L'É';
 	}
@@ -189,28 +195,26 @@ wchar_t help(char un) {
 
 void next() {
 	setlocale(LC_ALL, "Russian");
-	wchar_t buff[80];
-	String a = L"";
-	bool check = false;
-	text = L"";
-	for (int b = 0; b < 4; b++)
-	{
-		if (check) {
-			break;
+	string line, settings;
+	String txt, m, temp;
+	int count;
+	text = "";
+	//getline(stroka, settings);
+	
+	double n = line.size();
+	n /= 75;
+	count = ceil(n);
+	
+	for (int i = 0; i < 4; i++)
+	{	
+		getline(stroka, line);
+		line += '\n';
+		cout << line;
+		for (int j = 0; j < line.size(); j++)
+		{
+			text += help(line[j]);
 		}
-		a = L"";
-		stroka.read(buff, 80);
-		for (int i = 0; i < 80; i++) {
-			if (buff[i] == '\n') {
-				check = true;
-				break;
-			}
-			a += help(buff[i]);
-			
-		}
-		text += a + L'\n';
 	}
-
 }
 
 void RenderText(String texts) {
