@@ -20,6 +20,7 @@ using namespace std;
 
 RenderWindow window(VideoMode(w, h), "BL6-20");
 double x = 0, y = 0;
+int j = 0;
 bool tap = true;
 bool poz = false;
 SoundBuffer buffer;
@@ -243,16 +244,7 @@ void RenderText() {
 }
 
 void RenderMan() {
-	Texture skin_t, face_t, clothes_t;
-	skin_t.loadFromFile(skin);
-	face_t.loadFromFile(face);
-	clothes_t.loadFromFile(clothes);
-	Sprite skin_s(skin_t);
-	Sprite face_s(face_t);
-	Sprite clothes_s(clothes_t);
-	window.draw(skin_s);
-	window.draw(face_s);
-	window.draw(clothes_s);
+	
 }
 
 void RenderDialog() {
@@ -269,9 +261,12 @@ void RenderDialog() {
 	window.draw(rectangle1);
 }
 
-void RenderGameWindow(Sprite back) {
+void RenderGameWindow(Sprite back,Sprite skin, Sprite face, Sprite clothes ) {
 	window.draw(back); 
-	RenderMan();
+	//RenderMan();
+	window.draw(skin);
+	window.draw(face);
+	window.draw(clothes);
 	RenderDialog();
 	RenderText();
 	window.display();
@@ -320,15 +315,52 @@ int main()
 
 		//–Œ¡≈–“ —œ–¿…“
 		Texture textureMan;
+		Texture skin_t, face_t, clothes_t;
+		skin_t.loadFromFile(skin);
+		face_t.loadFromFile(face);
+		clothes_t.loadFromFile(clothes);
+		Sprite skin_s(skin_t);
+		Sprite face_s(face_t);
+		Sprite clothes_s(clothes_t);
 		
 		Sprite spriteMan(textureMan);
 
 		if (tap) {
 			for (int i = 0; i < 256 * speed; i++) {
-					if (poz) 
-						spriteMan.setPosition(400, 0);
-					spriteMan.setColor(Color(255, 255, 255, int(i/speed)));
-					RenderGameWindow(sprite);
+				if (poz) {
+					skin_s.setPosition(400, 0);
+					face_s.setPosition(400, 0);
+					clothes_s.setPosition(400, 0);
+					}
+						if (i == 0){
+							j += 1;
+							if (j == 5) {
+								skin = "texture\\zlata\\skin.png";
+									face = "texture\\zlata\\face.png";
+									clothes = "texture\\zlata\\clothes.png";
+									back = "texture\\vorota.png";
+							}
+							if (j == 20) {
+								skin = "texture\\who\\skin.png";
+								face = "texture\\who\\face.png";
+								clothes = "texture\\who\\clothes.png";
+								back = "texture\\bg1.png";
+
+							}
+							if (j == 30) {
+								j = 0;
+							}
+							skin_t.loadFromFile(skin);
+							face_t.loadFromFile(face);
+							clothes_t.loadFromFile(clothes);
+							Sprite skin_s(skin_t);
+							Sprite face_s(face_t);
+							Sprite clothes_s(clothes_t);
+						}
+						skin_s.setColor(Color(255, 255, 255, int(i/speed)));
+						face_s.setColor(Color(255, 255, 255, int(i/speed)));
+						clothes_s.setColor(Color(255, 255, 255, int(i/speed)));
+					RenderGameWindow(sprite, skin_s, face_s, clothes_s);
 			}
 			tap = false;
 			next();
