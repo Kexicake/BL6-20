@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <windows.h>
 #include <fstream>
 #include <iostream>
@@ -21,6 +22,11 @@ RenderWindow window(VideoMode(w, h), "BL6-20");
 double x = 0, y = 0;
 bool tap = true;
 bool poz = false;
+SoundBuffer buffer;
+string skin = "texture\\who\\skin.png", 
+	   face = "texture\\who\\face.png", 
+	   clothes = "texture\\who\\clothes.png", 
+	   back = "texture\\bg1.png";
 String text, temp;
 ifstream stroka("text\\rd.txt");
 
@@ -218,7 +224,7 @@ void next() {
 	}
 }
 
-void RenderText(String texts) {
+void RenderText() {
 	//Подключение русского
 	setlocale(LC_ALL, "Russian");
 
@@ -227,13 +233,26 @@ void RenderText(String texts) {
 	font.loadFromFile("fonts\\Montserrat-SemiBoldItalic.ttf");
 
 	//ТЕКСТ
-	Text text;
-	text.setFont(font);
-	text.setString(texts);
-	text.setCharacterSize(24);
-	text.setFillColor(Color::White);
-	text.setPosition(78, 677);
-	window.draw(text);
+	Text text1;
+	text1.setFont(font);
+	text1.setString(text);
+	text1.setCharacterSize(24);
+	text1.setFillColor(Color::White);
+	text1.setPosition(78, 677);
+	window.draw(text1);
+}
+
+void RenderMan() {
+	Texture skin_t, face_t, clothes_t;
+	skin_t.loadFromFile(skin);
+	face_t.loadFromFile(face);
+	clothes_t.loadFromFile(clothes);
+	Sprite skin_s(skin_t);
+	Sprite face_s(face_t);
+	Sprite clothes_s(clothes_t);
+	window.draw(skin_s);
+	window.draw(face_s);
+	window.draw(clothes_s);
 }
 
 void RenderDialog() {
@@ -250,18 +269,11 @@ void RenderDialog() {
 	window.draw(rectangle1);
 }
 
-Sprite RenderMan(string skin, string face, string clothes){
-	Texture skin_t;
-	skin_t.loadFromFile(skin);
-	Sprite skin_s(skin_t);
-	return skin_s;
-}
-
-void RenderGameWindow(Sprite back, Sprite man) {
+void RenderGameWindow(Sprite back) {
 	window.draw(back); 
-	window.draw(man);
+	RenderMan();
 	RenderDialog();
-	RenderText(text);
+	RenderText();
 	window.display();
 }
 
@@ -269,6 +281,11 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	next();
+	// загрузка музыки
+	buffer.loadFromFile("music\\main.wav");
+	Sound sound;
+	sound.setBuffer(buffer);
+	sound.play();
 	// Главный цикл приложения. Выполняется, пока открыто окно
 	while (window.isOpen())
 	{
@@ -293,26 +310,25 @@ int main()
 				}
 			}
 		}
-
+		
+		
 		//ФОН
-		String img = "texture\\bg1.png";
 		Texture texture;
-		texture.loadFromFile(img);
+		texture.loadFromFile(back);
 		Sprite sprite(texture);
 		//window.draw(sprite);
 
 		//РОБЕРТ СПРАЙТ
 		Texture textureMan;
-		textureMan.loadFromFile("texture\\robert.png");
+		
 		Sprite spriteMan(textureMan);
 
 		if (tap) {
 			for (int i = 0; i < 256 * speed; i++) {
 					if (poz) 
 						spriteMan.setPosition(400, 0);
-					
 					spriteMan.setColor(Color(255, 255, 255, int(i/speed)));
-					RenderGameWindow(sprite, spriteMan);
+					RenderGameWindow(sprite);
 			}
 			tap = false;
 			next();
